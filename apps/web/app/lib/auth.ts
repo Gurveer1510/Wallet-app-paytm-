@@ -74,7 +74,8 @@ export const authOptions = {
         // TODO: can u fix the type here? Using any is bad
         async session({ token, session }: { token: JWT, session: Session  }) {
             if (session.user) {
-                session.user.id = token.sub || ''; 
+                const customSession = session as CustomSession
+                customSession.user.id = token.sub || ''; 
             }
             return session;
         }
