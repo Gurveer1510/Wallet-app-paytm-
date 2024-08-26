@@ -12,6 +12,7 @@
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "turbo run generate",
+    "db:generate": "cd packages/database && npx prisma migrate && cd ../..",
     "lint": "turbo run lint"
   },
   "devDependencies": {
