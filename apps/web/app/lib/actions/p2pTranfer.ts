@@ -1,11 +1,22 @@
 "use server"
-import { getServerSession } from "next-auth"
+import { getServerSession, Session } from "next-auth"
 import { authOptions } from "../auth"
 import {prisma} from "@repo/database"
 
+type CustomUser = {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+  
+type CustomSession = Session & {
+    user: CustomUser
+}
 export const p2pTransfer = async(to: string, amount: number) => {
     const session = await getServerSession(authOptions)
-    const from = session?.user?.id
+    const customSession = session as CustomSession
+    const from = customSession?.user?.id
     if(!from){
         return {
             message: "Error while sending"

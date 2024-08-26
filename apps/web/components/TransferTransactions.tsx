@@ -1,7 +1,17 @@
 import { Card } from "@repo/ui/card"
-import { getServerSession } from "next-auth"
+import { getServerSession, Session } from "next-auth"
 import { authOptions } from "../app/lib/auth"
 
+type CustomUser = {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+  
+type CustomSession = Session & {
+    user: CustomUser
+}
 async function  TransferTransactions({transactions}: {
     transactions:{
         id: Number,
@@ -13,6 +23,7 @@ async function  TransferTransactions({transactions}: {
 }) {
     console.log(transactions)
     const session = await getServerSession(authOptions)
+    const customSession = session as CustomSession
     if(!transactions.length){
         return <Card title="Recent Transactions">
             <div className="text-center pb-8 pt-8">
@@ -23,7 +34,7 @@ async function  TransferTransactions({transactions}: {
   return (
     <Card title="Transactions">
         {transactions.map((t) => {
-            const recieved: Boolean = session?.user?.id == t.fromUserId ? false : true
+            const recieved: Boolean = Number(customSession?.user?.id) == t.fromUserId ? false : true
             return (
                 <div className="flex justify-between p-2 pb-2 border-b border-b-black">
                 <div>

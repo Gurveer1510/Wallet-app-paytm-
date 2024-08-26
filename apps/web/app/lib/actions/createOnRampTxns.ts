@@ -1,11 +1,24 @@
 "use server"
-import { getServerSession } from "next-auth"
+import { getServerSession, Session } from "next-auth"
 import {prisma} from "@repo/database"
 import { authOptions } from "../auth"
 
+
+type CustomUser = {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+  
+type CustomSession = Session & {
+    user: CustomUser
+}
+
 export const createOnRampTxns = async ({ provider, amount }: { provider: string, amount: number }) => {
     const session = await getServerSession(authOptions)
-    const userId = session?.user?.id
+    const customSession = session as CustomSession
+    const userId = customSession?.user?.id
 
     if(!userId){
         return {
