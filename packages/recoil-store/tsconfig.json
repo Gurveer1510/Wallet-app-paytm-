@@ -1,0 +1,14 @@
+{
+  "extends": "@repo/typescript-config/base.json",  // Adjust the path according to your folder structure
+  "compilerOptions": {
+    "outDir": "dist",  // Output directory for compiled files
+    "rootDir": "src",  // Root directory for source files
+    "composite": true,  // Enables project references
+    "declaration": true,  // Generates declaration files (.d.ts)
+    "declarationMap": true,  // Generates sourcemaps for declarations
+    "emitDeclarationOnly": true,  // Only emit declaration files
+    "skipLibCheck": true  // Skips type checking of declaration files
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

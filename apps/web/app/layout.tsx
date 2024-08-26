@@ -1,3 +1,7 @@
+import "./global.css"
+import { AppbarClient } from "../components/AppBarClient";
+import { Providers } from "./provider";
+
 export default function RootLayout({
   children,
 }: {
@@ -5,7 +9,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <Providers>
+
+        <body>
+          <AppbarClient />
+          {children}</body>
+      </Providers>
     </html>
   );
 }
